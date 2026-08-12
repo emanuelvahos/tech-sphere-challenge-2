@@ -1,0 +1,315 @@
+:root {
+  --bg: #F6EFE6;
+  --bg-card: #FFFFFF;
+  --text: #2B2622;
+  --text-muted: #6E6459;
+  --line: #E4D9C8;
+
+  --calm: #3E7C74;      /* escuchando al paciente */
+  --calm-soft: #DCEBE8;
+  --warm: #C96A3E;      /* el agente habla */
+  --warm-soft: #F6E1D3;
+  --danger: #B33F32;
+  --danger-soft: #F5DCD6;
+  --neutral: #8A8074;
+
+  --state-color: var(--neutral);
+  --state-soft: #EFE7DA;
+
+  --radius-lg: 28px;
+  --radius-full: 999px;
+  font-size: 18px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+}
+
+.screen {
+  width: 100%;
+  max-width: 480px;
+  min-height: 100dvh;
+  padding: max(28px, env(safe-area-inset-top)) 24px calc(28px + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 28px;
+}
+
+.header {
+  width: 100%;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--calm);
+}
+
+h1 {
+  margin: 0 0 10px;
+  font-size: clamp(1.6rem, 5vw, 2rem);
+  line-height: 1.2;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+/* ---------- stage ---------- */
+
+.stage {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+}
+
+.orb-wrap {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid var(--state-color);
+  opacity: 0.35;
+  transition: border-color 0.4s ease, opacity 0.4s ease;
+}
+
+.ring-outer {
+  width: 220px;
+  height: 220px;
+}
+
+.ring-mid {
+  width: 180px;
+  height: 180px;
+  opacity: 0.55;
+}
+
+body[data-call-active="true"] .ring-outer {
+  animation: pulse-ring 2.4s ease-out infinite;
+}
+
+body[data-call-active="true"] .ring-mid {
+  animation: pulse-ring 2.4s ease-out 0.3s infinite;
+}
+
+@keyframes pulse-ring {
+  0%   { transform: scale(0.82); opacity: 0.5; }
+  70%  { transform: scale(1.08); opacity: 0; }
+  100% { transform: scale(1.08); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-call-active="true"] .ring-outer,
+  body[data-call-active="true"] .ring-mid {
+    animation: none;
+  }
+}
+
+.orb {
+  position: relative;
+  width: 148px;
+  height: 148px;
+  border-radius: 50%;
+  border: none;
+  background: var(--state-soft);
+  color: var(--state-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.4s ease, color 0.4s ease, transform 0.15s ease;
+  box-shadow: 0 8px 24px -8px rgba(43, 38, 34, 0.25);
+}
+
+.orb:active {
+  transform: scale(0.97);
+}
+
+.orb:focus-visible {
+  outline: 3px solid var(--state-color);
+  outline-offset: 4px;
+}
+
+.orb-icon {
+  width: 56px;
+  height: 56px;
+  transition: opacity 0.2s ease;
+}
+
+.orb-icon-hidden {
+  display: none;
+}
+
+.orb-icon-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* waveform */
+
+.waveform {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 6px;
+  height: 36px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+body[data-call-active="true"] .waveform {
+  opacity: 1;
+}
+
+.waveform span {
+  display: block;
+  width: 5px;
+  min-height: 6px;
+  border-radius: 3px;
+  background: var(--state-color);
+  transform: scaleY(0.2);
+  transform-origin: bottom;
+  transition: transform 0.12s ease, background-color 0.4s ease;
+}
+
+/* status */
+
+.status-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text);
+  min-height: 1.5em;
+}
+
+.status-icon {
+  font-size: 1.2em;
+}
+
+.status-detail {
+  margin: -8px 0 0;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  min-height: 1.2em;
+}
+
+/* ---------- controls ---------- */
+
+.controls {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn {
+  width: 100%;
+  padding: 18px 20px;
+  border-radius: var(--radius-full);
+  border: none;
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background 0.2s ease, transform 0.1s ease, opacity 0.2s ease;
+  min-height: 56px;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background: var(--calm);
+  color: #FFFFFF;
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.btn-end {
+  background: var(--danger);
+  color: #FFFFFF;
+}
+
+.btn-icon {
+  width: 22px;
+  height: 22px;
+}
+
+.is-hidden {
+  display: none !important;
+}
+
+.footnote {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+/* ---------- state → color mapping ---------- */
+
+body[data-state="idle"]        { --state-color: var(--neutral); --state-soft: #EFE7DA; }
+body[data-state="permission"]  { --state-color: var(--calm);    --state-soft: var(--calm-soft); }
+body[data-state="connecting"]  { --state-color: var(--calm);    --state-soft: var(--calm-soft); }
+body[data-state="listening"]   { --state-color: var(--calm);    --state-soft: var(--calm-soft); }
+body[data-state="speaking"]    { --state-color: var(--warm);    --state-soft: var(--warm-soft); }
+body[data-state="ended"]       { --state-color: var(--neutral); --state-soft: #EFE7DA; }
+body[data-state="error"]       { --state-color: var(--danger);  --state-soft: var(--danger-soft); }
+
+/* small screens: keep everything comfortably tappable */
+@media (max-width: 360px) {
+  .orb-wrap { width: 190px; height: 190px; }
+  .ring-outer { width: 190px; height: 190px; }
+  .ring-mid { width: 156px; height: 156px; }
+  .orb { width: 128px; height: 128px; }
+}

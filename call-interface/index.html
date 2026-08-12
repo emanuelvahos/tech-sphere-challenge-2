@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Seguimiento postoperatorio — Llamada con el asistente</title>
+<meta name="description" content="Habla con el asistente de voz de seguimiento postoperatorio." />
+<meta name="color-scheme" content="light" />
+<theme-color content="#F6EFE6" />
+<link rel="stylesheet" href="/llamada/static/style.css" />
+</head>
+<body>
+  <main class="screen">
+    <header class="header">
+      <p class="eyebrow">Seguimiento postoperatorio</p>
+      <h1>Tu asistente de recuperación</h1>
+      <p class="subtitle">Una llamada corta para saber cómo sigues. Puedes terminarla cuando quieras.</p>
+    </header>
+
+    <section class="stage" aria-live="polite">
+      <div class="orb-wrap">
+        <div id="ring-outer" class="ring ring-outer" aria-hidden="true"></div>
+        <div id="ring-mid" class="ring ring-mid" aria-hidden="true"></div>
+        <button id="orb-button" class="orb" type="button" aria-describedby="status-text">
+          <svg id="icon-mic" class="orb-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 15a3.5 3.5 0 0 0 3.5-3.5v-5a3.5 3.5 0 0 0-7 0v5A3.5 3.5 0 0 0 12 15Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M6 11a6 6 0 0 0 12 0M12 19v2.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <svg id="icon-ear" class="orb-icon orb-icon-hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M13 3a6 6 0 0 0-6 6v4.5a2.5 2.5 0 0 0 5 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M13 3a6 6 0 0 1 6 6c0 2.5-1.2 3.6-2 5-.6 1-1 1.8-1 3a3 3 0 0 1-6 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <svg id="icon-speaker" class="orb-icon orb-icon-hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 9v6h4l5 4V5L8 9H4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="M17 9a4 4 0 0 1 0 6M19.5 6.5a8 8 0 0 1 0 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <svg id="icon-spinner" class="orb-icon orb-icon-hidden orb-icon-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 3a9 9 0 1 0 9 9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+          <svg id="icon-warn" class="orb-icon orb-icon-hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 3.5 21.5 20h-19L12 3.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="M12 9.5v4.2M12 17v.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="waveform" id="waveform" role="presentation" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+
+      <p id="status-text" class="status-text" role="status">
+        <span id="status-icon" class="status-icon">🎙️</span>
+        <span id="status-label">Toca el botón para iniciar la llamada</span>
+      </p>
+      <p id="status-detail" class="status-detail"></p>
+    </section>
+
+    <section class="controls">
+      <button id="start-button" class="btn btn-primary" type="button">
+        Iniciar llamada
+      </button>
+      <button id="end-button" class="btn btn-end is-hidden" type="button">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" class="btn-icon">
+          <path d="M3.5 10.5c5-5.2 12-5.2 17 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="m6 13 2.3-1.8a2 2 0 0 1 2.4 0l1 .8a2 2 0 0 0 2.4 0l1-.8a2 2 0 0 1 2.4 0L20 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="m4 20 16-16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        Terminar llamada
+      </button>
+    </section>
+
+    <p class="footnote">Tu voz se usa solo para esta conversación. Puedes colgar en cualquier momento.</p>
+  </main>
+
+  <script>
+    window.__ELEVENLABS_AGENT_ID__ = "{{AGENT_ID}}";
+  </script>
+  <script type="module" src="/llamada/static/app.js"></script>
+</body>
+</html>

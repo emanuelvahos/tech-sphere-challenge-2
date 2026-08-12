@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+chroma_db/
+.DS_Store
+*.egg-info/
+.pytest_cache/
+
+# Repo anidado con materiales del reto (clon separado, no forma parte de este repo)
+tsc-materiales/
