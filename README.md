@@ -47,3 +47,7 @@ Ver `.env.example`.
 `POST /webhook/post-call` — recibe el payload `post_call_transcription` de ElevenLabs, verifica su firma HMAC-SHA256 (header `elevenlabs-signature`, formato `t=<timestamp>,v0=<hmac>`), y si es válida procesa en background: clasifica severidad por reglas explícitas (ver `PATRONES_ROJO`/`PATRONES_AMARILLO` en `backend/webhook.py`), genera un resumen clínico estructurado vía LLM, y lo guarda en `llamadas.db` (SQLite local, en `.gitignore`).
 
 `GET /llamadas` — lista los resúmenes guardados, más reciente primero.
+
+## Despliegue en Render
+
+La versión de Python queda fija en `.python-version` (raíz del repo). Render **no** reconoce `runtime.txt` (eso es convención de Heroku) — usa `.python-version` o la variable de entorno `PYTHON_VERSION` en el dashboard, y esta última tiene prioridad si está seteada. Si el build sigue usando una versión de Python distinta a la del archivo, revisa que no haya un `PYTHON_VERSION` configurado en Settings → Environment del servicio en Render.
