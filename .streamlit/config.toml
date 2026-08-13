@@ -1,0 +1,27 @@
+# Tema de la consola: mismos tokens de diseno que call-interface/static/style.css
+# (paleta calida-clinica, radios, colores semanticos verde/amarillo/rojo).
+[theme]
+base = "light"
+primaryColor = "#3E7C74"            # --calm (misma teal que "escuchando" en la interfaz de llamada)
+backgroundColor = "#F6EFE6"         # --bg (crema calido)
+secondaryBackgroundColor = "#FFFFFF" # --bg-card
+textColor = "#2B2622"               # --text
+borderColor = "#E4D9C8"             # --line
+baseRadius = "1.25rem"              # ~= --radius-lg (28px), redondeado consistente con los orbes/botones de /llamada
+buttonRadius = "full"               # --radius-full (botones tipo pildora, igual que /llamada)
+font = "sans-serif"
+
+# Colores semanticos: reutilizados para las badges de clasificacion
+# verde/amarillo/rojo del historial de llamadas (st.badge), y para el
+# estado "procesado y disponible" de documentos.
+greenColor = "#3E7C74"               # --calm
+greenBackgroundColor = "#DCEBE8"     # --calm-soft
+greenTextColor = "#2B2622"
+
+orangeColor = "#C98A2E"              # ambar calido (nuevo, coherente con la familia terracota/ambar)
+orangeBackgroundColor = "#F3E6C9"
+orangeTextColor = "#2B2622"
+
+redColor = "#B33F32"                 # --danger
+redBackgroundColor = "#F5DCD6"       # --danger-soft
+redTextColor = "#2B2622"
