@@ -131,3 +131,45 @@ if st.button("Consultar", disabled=not pregunta.strip()):
         for i, frag in enumerate(resultado["respuesta_fragmentos"], start=1):
             with st.expander(f"Fragmento {i} — fuente: {frag['fuente']} (score {frag['score']})"):
                 st.write(frag["texto"])
+
+st.divider()
+
+st.header("4. Historial de llamadas")
+
+COLOR_CLASIFICACION = {
+    "verde": "🟢",
+    "amarillo": "🟡",
+    "rojo": "🔴",
+}
+
+if st.button("🔄 Refrescar historial"):
+    st.rerun()
+
+llamadas, error = backend_get("/llamadas")
+
+if error:
+    st.error(error)
+elif not llamadas:
+    st.info("Aún no hay llamadas registradas.")
+else:
+    for llamada in llamadas:
+        emoji = COLOR_CLASIFICACION.get(llamada.get("clasificacion"), "⚪")
+        fecha = llamada.get("fecha_llamada", "sin fecha")
+        resumen = llamada.get("resumen_narrativo") or "(sin resumen)"
+        titulo = f"{emoji} {llamada.get('clasificacion', 'desconocida').upper()} — {fecha}"
+
+        with st.expander(titulo):
+            st.markdown(f"**Resumen narrativo:** {resumen}")
+            st.markdown(f"**Razón de clasificación:** {llamada.get('razon_clasificacion', '—')}")
+            st.markdown(f"**Requiere atención humana:** {'Sí' if llamada.get('requiere_atencion_humana') else 'No'}")
+            st.markdown(f"**Duración de la llamada:** {llamada.get('duracion_llamada_segundos', '—')} s")
+            st.markdown(f"**Paciente:** {llamada.get('paciente_id') or 'no identificado'}")
+            st.markdown(f"**Conversation ID:** `{llamada.get('conversation_id', '—')}`")
+
+            sintomas = llamada.get("sintomas_reportados")
+            if isinstance(sintomas, dict):
+                st.markdown("**Síntomas reportados:**")
+                for campo, valor in sintomas.items():
+                    st.markdown(f"- **{campo.capitalize()}:** {valor}")
+            else:
+                st.warning(f"Síntomas: {sintomas}")

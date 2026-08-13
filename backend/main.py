@@ -1,10 +1,10 @@
 from pathlib import Path
 
-from fastapi import FastAPI, File, HTTPException, UploadFile
-from fastapi.responses import HTMLResponse
+from fastapi import BackgroundTasks, FastAPI, File, Header, HTTPException, Request, UploadFile
+from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 
-from backend import config, rag
+from backend import config, rag, webhook
 from backend.models import (
     DocumentoInfo,
     DocumentoRespuesta,
@@ -79,3 +79,25 @@ def query(body: PreguntaRequest):
     if not body.pregunta.strip():
         raise HTTPException(status_code=400, detail="La pregunta no puede estar vacía.")
     return rag.buscar(body.pregunta)
+
+
+@app.post("/webhook/post-call")
+async def webhook_post_call(
+    request: Request,
+    background_tasks: BackgroundTasks,
+    elevenlabs_signature: str | None = Header(default=None, alias="elevenlabs-signature"),
+):
+    raw_body = await request.body()
+
+    if not webhook.verificar_firma(raw_body, elevenlabs_signature):
+        raise HTTPException(status_code=401, detail="Firma de webhook inválida.")
+
+    payload = await request.json()
+    background_tasks.add_task(webhook.procesar_llamada, payload)
+
+    return JSONResponse({"status": "recibido"})
+
+
+@app.get("/llamadas")
+def listar_llamadas():
+    return webhook.listar_resumenes()
