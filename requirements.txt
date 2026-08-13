@@ -1,7 +1,11 @@
-# Nota: chroma-hnswlib se fija a 0.7.6a9 porque es la unica version con wheel
-# precompilado para Windows + Python 3.12 (0.7.6 estable solo trae wheels
-# hasta cp311 y requiere Visual C++ Build Tools para compilar en 3.12/3.13).
-# Funcionalmente equivalente a 0.7.6 para lo que usa chromadb aqui.
+# Nota: el despliegue (Render) fija Python 3.11 via runtime.txt. chroma-hnswlib
+# se deja en la version estable 0.7.6 (la que chromadb==0.5.23 exige de forma
+# exacta) porque para Python 3.11 SI trae wheel precompilado en manylinux/
+# Windows, a diferencia de Python 3.12+ (donde solo hay wheel en la alpha
+# 0.7.6a9). Si desarrollas localmente con Python 3.12/3.13, puede que debas
+# instalar chroma-hnswlib==0.7.6a9 aparte (pip install --only-binary
+# chroma-hnswlib chroma-hnswlib==0.7.6a9) porque 0.7.6 estable no tiene
+# wheel ahi y falla al compilar sin Visual C++ Build Tools.
 aiohappyeyeballs==2.7.1
 aiohttp==3.14.3
 aiosignal==1.4.0
@@ -18,7 +22,7 @@ build==1.5.0
 certifi==2026.7.22
 cffi==2.1.1
 charset-normalizer==3.5.0
-chroma-hnswlib==0.7.6a9
+chroma-hnswlib==0.7.6
 chromadb==0.5.23
 click==8.4.2
 colorama==0.4.6
@@ -50,7 +54,7 @@ mdurl==0.1.2
 mmh3==5.2.1
 multidict==6.7.1
 narwhals==2.24.0
-numpy==2.5.2
+numpy==2.4.6
 oauthlib==3.3.1
 onnxruntime==1.28.0
 opentelemetry-api==1.44.0
