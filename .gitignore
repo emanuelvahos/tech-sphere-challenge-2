@@ -11,3 +11,6 @@ llamadas.db
 
 # Repo anidado con materiales del reto (clon separado, no forma parte de este repo)
 tsc-materiales/
+
+# Datos de desarrollo/demo del reto, no se versionan
+dataset/*.xlsx

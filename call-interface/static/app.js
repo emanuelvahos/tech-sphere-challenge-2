@@ -155,6 +155,15 @@ async function startCall() {
 
     conversation = await Conversation.startSession({
       agentId: AGENT_ID,
+      // Caso de demo fijo para el video, reemplazar por selección real en producción.
+      // Paciente pac_42_00000 (dataset/perfiles_pacientes_co.xlsx + perfiles_clinicos_pacientes_silver_contest.xlsx
+      // + trayectorias_postop_silver.xlsx, día postoperatorio 3).
+      dynamicVariables: {
+        nombre_paciente: "Mauricio Juan González Sánchez",
+        procedimiento: "Apendicectomía",
+        fecha_cirugia: "2026-06-14",
+        dia_postoperatorio: "3",
+      },
       onConnect: () => {
         setState("listening");
         startVolumePolling();

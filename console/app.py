@@ -1,4 +1,5 @@
 import os
+from collections import Counter
 
 import requests
 import streamlit as st
@@ -276,6 +277,12 @@ with tab_historial:
     elif not llamadas:
         st.info("Aún no hay llamadas registradas.")
     else:
+        conteo_clasificaciones = Counter(l.get("clasificacion") for l in llamadas)
+        col_verde, col_amarillo, col_rojo = st.columns(3)
+        col_verde.metric("🟢 Verde", conteo_clasificaciones.get("verde", 0))
+        col_amarillo.metric("🟡 Amarillo", conteo_clasificaciones.get("amarillo", 0))
+        col_rojo.metric("🔴 Rojo", conteo_clasificaciones.get("rojo", 0))
+
         opciones_filtro = [f"{v['icon']} {k.capitalize()}" for k, v in CLASIFICACION_UI.items()]
         seleccion = st.pills(
             "Filtrar por clasificación",
